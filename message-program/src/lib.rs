@@ -22,7 +22,7 @@ impl Message {
 
 #[derive(TryFromPrimitive, IntoPrimitive)]
 #[repr(u8)]
-enum Instructions {
+pub enum Instructions {
     Initialize = 3,
     Close = 6,
     Update = 9,
@@ -30,7 +30,7 @@ enum Instructions {
 
 pub fn send_instruction(data: &[u8]) -> Result<()> {
     let (discriminator, data) = data.split_first().unwrap();
-    process_instruction(*discriminator, data)?;
+    process_instruction(*discriminator, &data.to_vec())?;
     Ok(())
 }
 
